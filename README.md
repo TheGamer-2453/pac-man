@@ -1,2 +1,2 @@
 # pac-man
-Pac-Man is a classic 1980 arcade maze game where players guide a yellow character through pellet-filled mazes while avoiding four colorful ghosts. Eating Power Pellets lets Pac-Man temporarily defeat ghosts for bonus points. Clearing every pellet advances players to increasingly difficult levels.
+pac-man is a legendary 1980 arcade mazechase game where players control a yellow circular character navigating intricate mazes filled with pellets. players must avoid four colorful ghosts while collecting dots and bonus fruits. eating power pellets temporarily weakens ghosts, allowing Pac-Man to eat them for extra points and progress through harder levels.

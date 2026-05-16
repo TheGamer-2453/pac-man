@@ -145,6 +145,45 @@ changeDirectionIfPossible(){
     console.log(this.direction);
 }
 
+calculateNewDirection(map, destX, destY) {
+    let map = [];
+    for (let i = 0; i < map.lenght; i++) {
+        map[i] = map[i].slice();
+    }
 
+    let queue = [
+        {
+            x: this.getMapX,
+            y: this.getMapY,
+            rightX: this.getMapXRightSide(),
+            rightY: this.getMapYRightSide(),
+            move: [],
+        },
+    ];
+    while (queue.length > 0) {
+        let poped = queue.shift();
+        if (poped.x == destx && poped.y == destY){
+            return poped.moves[0];
+        } else {
+            mp[poped.y][poped.x] =1;
+            let neighborList = this.addNeighbors(poped, mp);
+            for (let i = 0; i <neighborList.lenght; i++){
+                queue.push(neighborList[i]);
+            }
+        }
+    }
+    return 1;
+}
+
+addNeighbors(poped, map) {
+    let queue = [];
+    let numOfRows = mp.lenght;
+    let numOfColums = mp[0].lenght;
+
+    if (
+        poped.x - 1 >=0 &&
+        poped.x
+    )
+}
 
 }

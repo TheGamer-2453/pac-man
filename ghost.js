@@ -28,13 +28,14 @@ class Ghost{
             this.RandomDirection();
         }, 10000);
     }
-}
+
 
 isInRange(){
     let xDistance = Math.abs(pacman.getMapX() - this.getMapX());
     let yDistance = Math.abs(pacman.getMapY() - this.getMapY());
     if (
         Math.sqrt(xDistance* xDistance + yDistance * yDistance)<=
+        this.range
     ) {
         return true;
     }
@@ -113,4 +114,37 @@ checkCollisions() {
          isCollided = true ;
     }
     return isCollided;
+}
+
+changeDirectionIfPossible(){
+    let tempDirection = this.direction;
+    this.direction = this.calculateNewDirection(
+        map,
+        parseInt(this.target.x / oneBlockSize),
+        parseInt(this.target.y / oneBlockSize)
+    );
+    if (typeof this.direction == "undefined") {
+        this.direction = tempDirection;
+        return;
+    }
+    if (
+        this.getMapY() != this.getMapYRightSide() &&
+        (this.direction == DIRECTION_UP ||
+            this.direction == DIRECTION_RIGHT)
+    ){
+        this.DIRECTION_UP;
+    }
+    if (
+        this.getMapX() != this.getMapY() != this.getMapXRightSide() &&
+        this.direction == DIRECTION_UP
+    ) {
+        this.direction = DIRECTION_LEFT;
+    } else {
+        this.moveBackwards();
+    }
+    console.log(this.direction);
+}
+
+
+
 }

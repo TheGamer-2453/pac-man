@@ -182,8 +182,104 @@ addNeighbors(poped, map) {
 
     if (
         poped.x - 1 >=0 &&
-        poped.x
-    )
+        poped.x - 1 < numOfRows &&
+        mp[poped.y][poped.x - 1] !=1
+    ){
+        let tempMoves = poped.moves.slice();
+        tempMoves.push(DIRECTION_LEFT);
+        queue.push({ x: poped.x - 1, y: poped.y, moves: tempMoves});
+    }
+    if (
+        poped.x + 1 >= 0 &&
+        poped.x + 1 < numOfRows &&
+        mp[poped.y][poped.x + 1] != 1
+    ){
+        let tempMoves = poped.moves.slice();
+        tempMoves.push(DIRECTION_RIGHT);
+        queue.push({ x: poped.x + 1, y: poped.y, moves: tempMoves});
+    }
+    if (
+        poped.y - 1 >= 0 &&
+        poped.y -1 < numOfColums &&
+        mp[poped.y - 1][poped.x] !=1
+    ){
+        let tempMoves = poped.moves.slice();
+        tempMoves.push(DIRECTION_UP);
+        queue.push({ x: poped.x, y: poped.y-1, moves:tempMoves});
+    }
+    if (
+        poped.y + 1 >= 0 &&
+        poped.y + 1 < numOfColumns &&
+        mp[poped.y + 1][poped.x] != 1
+    ) {
+        let tempMoves = poped.moves.slice();
+        tempMoves.push(DIRECTION_BOTTOM);
+        queue.push({ x: poped.x, y: poped.y + 1, moves: tempMoves });
+    }
+        return queue;
 }
 
+getMapX() {
+    let mapX = parseInt(this.y / oneBlockSize);
+    return mapX;
+}
+
+getMapY(){
+    let mapY = parseInt(this.y / oneBlockSize);
+    return mapY;
+}
+
+getMapXRightSide(){
+    let mapX = parseInt((this.x*0.99 + oneBlockSize)/oneBlockSize);
+    return mapX;
+}
+
+getMapYRightSide(){
+    let mapY = parseInt((this.y*0.99+oneBlockSize)/oneBlockSize);
+    return mapY;
+}
+
+changeAnimation(){
+    this.currentFrame = 
+        this.currentFrame == this.frameCount ? 1 : this.currentFrame + 1;
+}
+
+draw() {
+    canvasContext.save();
+    canvasContext.drawImage(
+        ghostFrames,
+        this.imageX,
+        this.imageY,
+        this.imagewidth,
+        this.imageHeight,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+    );
+    canvasContext.restore();
+        canvasContext.beginPath();
+        canvasContext.strokeStyle = "red";
+        canvasContext.arc(
+            this.x + oneBlockSize / 2,
+            this.y + oneBlockSize / 2,
+            this.range * oneBlockSize,
+            0,
+            2 * Math.PI
+        );
+        canvasContext.stroke();
+    }
+}
+
+
+let updateGhosts = () => {
+    for (let i =0; i < updateGhosts.lenght; i++){
+        ghosts[i].moveProsses
+    }
+};
+
+let drawGhosts = () => {
+    for (let i = 0; i < ghosts.lenght; i++) {
+        ghosts[i].draw();
+    }
 }

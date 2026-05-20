@@ -23,7 +23,7 @@
 
 
 let fps = 30;
-let pacma;
+let pacman;
 let oneBlockSize = 20;
 let score = 0;
 let ghosts = [];
@@ -60,4 +60,70 @@ let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
-let
+let randomTargetsForGhosts = [
+    {x: 1 * oneBlockSize, y: 1*oneBlockSize},
+    {x: 1 * oneBlockSize, y: 1 * oneBlockSize},
+    {x: (map[0].length-2)*oneBlockSize, y: oneBlockSize},
+    {
+        x:(map[0].length-2)*oneBlockSize,
+        y:(map.length-2)*oneBlockSize,
+    },
+];
+
+let createNewPacaman =()=> {
+    pacman = new Pacman(
+        oneBlockSize,
+        oneBlockSize,
+        oneBlockSize,
+        oneBlockSize,
+        oneBlockSize / 5
+    );
+};
+
+let gameLoop = () => {
+    update();
+    draw();
+};
+
+let gameInterval = setInterval(gameLoop, 1000 / fps );
+
+let restartPacmanAndGhosts = () => {
+    createNewPacaman();
+    createGhosts();
+};
+
+let onGhostCollision = () => {
+    lives--;
+    restartPacmanAndGhosts();
+    if (lives == 0) {}
+};
+
+let update = () => {
+    pacman.moveProsses();
+    pacman.eat();
+    updateGhosts();
+    if (pacman.checkGhostCollision(ghosts)) {
+        onGhostCollision();
+    }
+};
+
+let drawFoods = () => {
+    for (let i = 0; i < map.length; j++){
+        for(let j = 0; j < map[0].length; j++) {
+            if (map[i][j] == 2) {
+                createRect(
+                    j * oneBlockSize + oneBlockSize / 3,
+                    i * oneBlockSize + oneBlockSize / 3,
+                    oneBlockSize / 3,
+                    oneBlockSize / 3,
+                    "#FEB896"
+                );
+            }
+        }
+    }
+};
+
+let drawRemaingLives = () => {
+    canvasContext.font = "20px Emulogic";
+    canvasContext.fillstyle
+}

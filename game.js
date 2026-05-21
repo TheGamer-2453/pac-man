@@ -21,7 +21,6 @@
     { x: 176, y: 121 },
 ];
 
-
 let fps = 30;
 let pacman;
 let oneBlockSize = 20;
@@ -30,9 +29,6 @@ let ghosts = [];
 let wallSpaceWidth = oneBlockSize / 1.6;
 let wallOffset = (oneBlockSize - wallSpaceWidth) / 2;
 let wallInnerColor = "black";
-
-
-
 
 let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -125,5 +121,135 @@ let drawFoods = () => {
 
 let drawRemaingLives = () => {
     canvasContext.font = "20px Emulogic";
-    canvasContext.fillstyle
-}
+    canvasContext.fillstyle = "white";
+    canvasContext.fillText("lives:", 220, oneBlockSize * (map.length + 1));
+
+    for (let i = 0; i < lives; i++) {
+        canvasContext.drawImage(
+            pacmanFrames,
+            2*oneBlockSize,
+            0,
+            oneBlockSize,
+            oneBlockSize,
+            350 + i * oneBlockSize,
+            oneBlockSize * map.length + 2,
+            oneBlockSize,
+            oneBlockSize,
+        );
+    }
+};
+
+let drawScore = () => {
+    canvasContext.font = "20px Emulogic";
+    canvasContext.fillstyle = "white";
+    canvasContext.fillText(
+        "score: " + score,
+        0,
+        oneBlockSize + (map.length + 1)
+    );
+};
+
+let draw = () => {
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+    createRect(0, 0, canvas.width, canvas.height);
+    drawWalls();
+    drawFoods();
+    drawGhosts();
+    pacman.draw();
+    drawScore();
+    drawRemaingLives();
+};
+
+let drawWalls = () => {
+    for(let i = 0; i < map.length; j++) {
+        for (let j=0; j < map[0].length; j++) {
+            if(map[i][j]==1){
+                createRect(
+                    j * oneBlockSize + wallOffset,
+                    i * oneBlockSize + wallOffset,
+                    wallSpaceWidth + wallOffset,
+                    wallSpaceWidth,
+                    wallInnerColor
+                );
+            }
+            
+            if (j > 0 && map[i][j - 1] == 1){
+                createRect(
+                    j * oneBlockSize + wallOffset,
+                    i * oneBlockSize + wallOffset,
+                    wallSpaceWidth + wallOffset,
+                    wallSpaceWidth,
+                    wallInnerColor
+                );
+            }
+
+            if (j < map[0].length - 1 && map[i][j + 1] == 1){
+                createRect(
+                    j * oneBlockSize + wallOffset,
+                    i * oneBlockSize + wallOffset,
+                    wallSpaceWidth + wallOffset,
+                    wallSpaceWidth,
+                    wallInnerColor
+                );
+            }
+
+            if (i < map.length - 1 && map[i+1][j] == 1){
+                createRect(
+                    j * oneBlockSize + wallOffset,
+                    i * oneBlockSize + wallOffset,
+                    wallSpaceWidth,
+                    wallSpaceWidth + wallOffset,
+                    wallInnerColor
+                );
+            }
+
+            if (i > 0 && map[i - 1][j] == 1){
+                createRect(
+                    j * oneBlockSize + wallOffset,
+                    i * oneBlockSize,
+                    wallSpaceWidth,
+                    wallOffset + wallOffset,
+                    wallInnerColor
+                );
+            }
+        }
+    }
+};
+
+let createGhosts = () => {
+    ghosts = [];
+    for (let i = 0; i < ghostCount * 2; i++) {
+        let newGhost = new ghost(
+            9 * oneBlockSize + (i % 2 == 0 ? 0 : 1) * oneBlockSize,
+            10 * oneBlockSize + (i % 2 == 0 ? 0 : 1) * oneBlockSize,
+            oneBlockSize,
+            oneBlockSize,
+            pacman.speed / 2,
+            ghostImageLocations[i % 4].x,
+            ghostImageLocations[i % 4].y,
+            124,
+            116,
+            6 + i
+        );
+        ghosts.push(newGhost);
+    }
+};
+
+createNewPacaman();
+createGhosts();
+gameLoop();
+
+window.addEventListener("keydown", (event) => {
+    let k = event.keyCode;
+    setTimeout( () => {
+        if (k == 37 || k == 65){
+            pacman.newDirection = DIRECTION_LEFT;
+        } else if (k == 38 || k == 87){
+            pacman.newDirection = DIRECTION_UP;
+        } else if ( k == 39 || k == 68){
+            pacman.newDirection = DIRECTION_RIGHT;
+        } else if (k == 40 || k == 83){
+            pacman.newDirection = DIRECTION_BOTTOM;
+        }
+    }, 1);
+});

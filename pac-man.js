@@ -14,25 +14,24 @@ class Pacman {
         }, 100);
     }
 
-
     moveProcess() {
         this.changeDirectionIfPossible();
         this.moveForwards();
         if (this.checkCollisions()) {
             this.moveBackwards();
-            return ;
+            return;
         }
     }
 
     eat() {
         for (let i = 0; i < map.length; i++) {
-            for (let j = 0;j < map[0].length; j++) {
+            for (let j = 0; j < map[0].length; j++) {
                 if (
                     map[i][j] == 2 &&
                     this.getMapX() == j &&
                     this.getMapY() == i
                 ) {
-                    map[i][j] == 2 &&
+                    map[i][j] = 3;
                     score++;
                 }
             }
@@ -41,13 +40,13 @@ class Pacman {
 
     moveBackwards() {
         switch (this.direction) {
-            case DIRECTION_RIGHT: 
+            case DIRECTION_RIGHT:
                 this.x -= this.speed;
                 break;
-            case DIRECTION_UP: 
+            case DIRECTION_UP:
                 this.y += this.speed;
                 break;
-            case DIRECTION_LEFT: 
+            case DIRECTION_LEFT:
                 this.x += this.speed;
                 break;
             case DIRECTION_BOTTOM: 
@@ -58,7 +57,7 @@ class Pacman {
 
     moveForwards() {
         switch (this.direction) {
-            case DIRECTION_RIGHT: 
+            case DIRECTION_RIGHT:
                 this.x += this.speed;
                 break;
             case DIRECTION_UP: 
@@ -87,24 +86,24 @@ class Pacman {
             ] == 1 ||
             map[parseInt(this.y / oneBlockSize + 0.9999)][
                 parseInt(this.x / oneBlockSize + 0.9999)
-            ]
+            ] == 1
         ) {
             isCollided = true;
         }
         return isCollided;
     }
 
-    checkGhostCollisions(ghosts) {
-        for (let i = 0; i < ghosts.length; i++){
-            let ghosts = ghosts[i];
+    checkGhostCollision(ghosts) {
+        for (let i = 0; i < ghosts.length; i++) {
+            let ghost = ghosts[i];
             if (
-                ghost.getMapX() == this.getMapX() && 
+                ghost.getMapX() == this.getMapX() &&
                 ghost.getMapY() == this.getMapY()
             ) {
                 return true;
             }
         }
-        return false ;
+        return false;
     }
 
     changeDirectionIfPossible() {
@@ -127,23 +126,26 @@ class Pacman {
 
     getMapY() {
         let mapY = parseInt(this.y / oneBlockSize);
+
         return mapY;
     }
 
-    getMapXRightSide(){
+    getMapXRightSide() {
         let mapX = parseInt((this.x * 0.99 + oneBlockSize) / oneBlockSize);
-        return mapX; 
+        return mapX;
     }
+
     getMapYRightSide() {
         let mapY = parseInt((this.y * 0.99 + oneBlockSize) / oneBlockSize);
         return mapY;
     }
 
     changeAnimation() {
-        this.currentFrame = this.currentFrame == this.frameCount ? 1 : this.currentFrame + 1;
+        this.currentFrame =
+            this.currentFrame == this.frameCount ? 1 : this.currentFrame + 1;
     }
 
-     draw() {
+    draw() {
         canvasContext.save();
         canvasContext.translate(
             this.x + oneBlockSize / 2,
@@ -168,3 +170,4 @@ class Pacman {
         canvasContext.restore();
     }
 }
+

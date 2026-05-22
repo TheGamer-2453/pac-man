@@ -248,7 +248,8 @@ window.addEventListener("keydown", (event) => {
             
             pacman.nextDirection = DIRECTION_LEFT;
         } else if (k == 38 || k == 87) {
-                        pacman.nextDirection = DIRECTION_UP;
+            
+            pacman.nextDirection = DIRECTION_UP;
         } else if (k == 39 || k == 68) {
             
             pacman.nextDirection = DIRECTION_RIGHT;

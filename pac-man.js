@@ -247,7 +247,7 @@ function movePacman(e) {
         pacman.updateDirection('R');
     }
 
-    //update pacman images
+    
     if (pacman.direction == 'U') {
         pacman.image = pacmanUpImage;
     }

@@ -268,7 +268,7 @@ function movePacman(e) {
     
 }
 
-function collision(a, b) {d
+function collision(a, b) {
     return a.x < b.x + b.width &&   
            a.x + a.width > b.x &&   
            a.y < b.y + b.height &&  
@@ -344,4 +344,3 @@ class Block {
         this.y = this.startY;
     }
 };
-
